@@ -181,12 +181,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GA_PAT_TOKEN }}
         run: |
           git checkout -b releases/${NEW_TAG}
+          git push --set-upstream origin releases/${NEW_TAG}
 
-      - name: push new release branch to origin
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GA_PAT_TOKEN }}
-          branch: releases/${NEW_TAG}
+#      - name: push new release branch to origin
+#        uses: ad-m/github-push-action@master
+#        with:
+#          github_token: ${{ secrets.GA_PAT_TOKEN }}
+#          branch: releases/${NEW_TAG}
 
       #--------------------------------------------------------------
       # merge changes back to main
