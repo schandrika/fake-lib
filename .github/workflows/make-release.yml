@@ -113,13 +113,13 @@ jobs:
           virtualenvs-in-project: true
           installer-parallel: true
 
-      - run: poetry config repositories.test-pypi https://test.pypi.org/simple/
       #----------------------------------------------
       # install your root project, if required
       #----------------------------------------------
       - name: Install library
         run: |
           poetry lock --no-update
+          poetry config repositories.test-pypi https://test.pypi.org/simple/
           poetry install --no-interaction 
 
       - name: Use given release-version number
