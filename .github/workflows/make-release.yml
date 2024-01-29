@@ -58,7 +58,7 @@ jobs:
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - run: echo "GITHUB_TOKEN=${{ secrets.GA_PAT_TOKEN }}" >> "$GITHUB_ENV"
-      - run: poetry config repositories.test-pypi https://test.pypi.org/simple/
+
       #----------------------------------------------
       #       check-out repo and set-up python
       #----------------------------------------------
@@ -113,7 +113,7 @@ jobs:
           virtualenvs-in-project: true
           installer-parallel: true
 
-
+      - run: poetry config repositories.test-pypi https://test.pypi.org/simple/
       #----------------------------------------------
       # install your root project, if required
       #----------------------------------------------
