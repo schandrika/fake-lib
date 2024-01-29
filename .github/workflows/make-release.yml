@@ -120,6 +120,7 @@ jobs:
         run: |
           poetry lock --no-update
           poetry config repositories.test-pypi https://test.pypi.org/simple/
+          poetry config --list
           poetry install --no-interaction 
 
       - name: Use given release-version number
