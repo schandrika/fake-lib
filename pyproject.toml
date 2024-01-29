@@ -19,7 +19,7 @@ classifiers = [
 ]
 [[tool.poetry.source]]
 name = "test-pypi"
-url = "https://test.pypi.org/simple/"
+url = "https://test.pypi.org/legacy/"
 priority = "explicit"
 
 [tool.poetry.dependencies]
