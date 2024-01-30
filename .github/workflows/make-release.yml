@@ -67,7 +67,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: develop
-          token: ${{ secrets.GA_PAT_TOKEN }}
+          #token: ${{ secrets.GA_PAT_TOKEN }}
 
       - name: Do a git merge dry run
         id: merge-dry-run
@@ -131,7 +131,7 @@ jobs:
 
           # we want to be able to use the variable in later
           # steps we set a NEW_TAG environmental variable
-          echo "NEW_TAG=$(echo ${NEW_TAG})" >> $GITHUB_ENV
+          # echo "NEW_TAG=$(echo ${NEW_TAG})" >> $GITHUB_ENV
           # we don't want to update pyproject.toml yet. don't want this change to create merge conflict.
           # we don't really persist right version in pyproject.toml to figure out the next version. we use git tags.
           git restore pyproject.toml
