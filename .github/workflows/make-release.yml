@@ -47,12 +47,8 @@ env:
   PYTHON_VERSION: '3.10'
 
 jobs:
-
   deploy-release:
     runs-on: ubuntu-22.04
-    permissions:
-      contents: write  # To push a branch
-      pull-requests: write  # To create a PR from that branch
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
