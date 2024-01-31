@@ -1,6 +1,8 @@
 name: Run Pytests
 
-on: push
+on: schedule
+  - cron: '*/5 * * * *'
+  - workflow_dispatch
 
 defaults:
   run:
@@ -45,8 +47,6 @@ jobs:
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
-
-
 
 
       #----------------------------------------------
