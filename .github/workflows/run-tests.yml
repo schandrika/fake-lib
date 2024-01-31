@@ -64,4 +64,4 @@ jobs:
           files=$(ls)
           echo "files are ${files}"
           poetry install --no-interaction
-          poetry run pytest tests
+          poetry run pytest
