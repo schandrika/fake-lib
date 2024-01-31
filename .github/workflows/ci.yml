@@ -1,0 +1,56 @@
+name: CI
+on: workflow_dispatch
+env:
+  LANG: en_US.utf-8
+  LC_ALL: en_US.utf-8
+  PYTHON_VERSION: '3.10'
+  
+jobs:
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"] # "3.8", "3.9", "3.10", "3.11"]
+        poetry-version: ["1.7.1"]
+        os: [ubuntu-22.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      # - uses: actions/setup-python@v5
+      #   with:
+      #     python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      #- name: Run image
+      #  uses: abatilo/actions-poetry@v2
+      #  with:
+      #    poetry-version: ${{ matrix.poetry-version }}
+      #- name: Setup a local virtual environment (if no poetry.toml file)
+      #  run: |
+      #    poetry config virtualenvs.create true
+      #    poetry config virtualenvs.in-project true
+      #- name: View poetry --help
+      #  run: poetry --help
+      #- name: Run install
+      #  run: poetry install -vvv --no-cache
+      
+      #----------------------------------------------
+      #  -----  install & configure poetry  -----
+      #----------------------------------------------
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.3.4
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      #----------------------------------------------
+      # install your root project, if required
+      #----------------------------------------------
+      - name: Install library
+        run: |
+          poetry lock --no-update
+          poetry install --no-interaction 
