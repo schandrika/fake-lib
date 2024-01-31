@@ -64,5 +64,6 @@ jobs:
           echo "current dir is ${{ github.workspace }}"
           files=$(ls)
           echo "files are ${files}"
-          poetry install --no-interaction --with dev
+          pip install pytest
+          poetry install --no-interaction
           poetry run pytest
