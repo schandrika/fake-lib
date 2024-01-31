@@ -61,6 +61,6 @@ jobs:
       #----------------------------------------------
       - name: Install library and run tests
         run: |
+          echo "current dir is ${{ github.workspace }}"
           poetry install --no-interaction
-          poetry add --group dev pytest-github-actions-annotate-failures
           poetry run pytest tests
