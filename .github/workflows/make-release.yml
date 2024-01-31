@@ -171,19 +171,15 @@ jobs:
       # Create a new releases/new_tag
       #--------------------------------------------------------------
       - name: Create a new releases branch locally
-        env:
-         GITHUB_TOKEN: ${{ secrets.GA_PAT_TOKEN }}
         run: |
-          echo "GITHUB_TOKEN=${{ secrets.GA_PAT_TOKEN }}" >> "$GITHUB_ENV"
-          git remote set-url origin https://github.com/schandrika/fake-lib
           git checkout -b releases/${NEW_TAG}
           git push --set-upstream origin releases/${NEW_TAG}
 
-#      - name: push new release branch to origin
-#        uses: ad-m/github-push-action@master
-#        with:
-#          github_token: ${{ secrets.GA_PAT_TOKEN }}
-#          branch: releases/${NEW_TAG}
+      - name: push new release branch to origin
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GA_PAT_TOKEN }}
+          branch: releases/${NEW_TAG}
 
       #--------------------------------------------------------------
       # merge changes back to main
@@ -234,7 +230,7 @@ jobs:
           # check bump-rule and set accordingly
           prerelease: ${{ inputs.bump-rule == 'prerelease'  }}
           tag: ${{ env.NEW_TAG }}
-          #token: ${{ secrets.GA_PAT_TOKEN }}
+          token: ${{ secrets.GA_PAT_TOKEN }}
 
       - name: Publish to pypi
         id: publish-to-pypi
@@ -267,8 +263,8 @@ jobs:
       - name: if publish to pypi/test-pypi failed delete release and tag on github
         if: ${{ ! (steps.publish-to-pypi.outcome == 'success' || steps.publish-to-test-pypi.outcome == 'success') }}
         uses: dev-drprasad/delete-tag-and-release@v0.2.1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GA_PAT_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GA_PAT_TOKEN }}
         with:
           tag_name: ${{ env.NEW_TAG }}
 
