@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fake-lib"
-version = "0.1.0rc0"
+version = "2.1.1a0"
 description = "fake volttron library for testing github tool"
 authors = ["VOLTTRON Team <volttron@pnnl.gov>"]
 license = "Apache License 2.0"
@@ -24,7 +24,7 @@ priority = "explicit"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
-fake-volttron = {version = ">=0.1.0rc0", source = "test-pypi"}
+fake-volttron = {version = ">=0.1.0rc0", source = "test-pypi", allow-prereleases=true}
 
 [tool.yapfignore]
 ignore_patterns = [
