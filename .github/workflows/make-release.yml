@@ -50,12 +50,45 @@ jobs:
   deploy-release:
     runs-on: ubuntu-22.04
     steps:
-
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       #----------------------------------------------
       #       check-out repo and set-up python
       #----------------------------------------------
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: develop
+
+      - name: Do a git merge dry run
+        id: merge-dry-run
+        run: |
+          git config --global user.email "deploy-release-action@pnl.gov"
+          git config --global user.name "Deploy Release Github Action"
+          git config --add url."git@github.com:".insteadOf "https://github.com/"
+          git checkout main
+          git merge --no-commit --no-ff develop
+        continue-on-error: true
+
+      - name: Abort merge dry-run
+        run: |
+            if [[ -f .git/MERGE_HEAD ]]; then
+              git merge --abort
+            fi
+
+      - name: Check if merge had conflicts.
+        # if there is conflict and there is no merge strategy set then abort merge and exit
+        if: steps.merge-dry-run.outcome != 'success' && github.event.inputs.merge-strategy == ''
+        run: |
+          echo "merge strategy is ${{ inputs.merge-strategy }}"
+          echo "Merge to main has conflicts. Either do a manual merge and release or set input merge-strategy and re-run action"
+          exit 1
+
+      - name: Recheckout develop
+        run: |
+          git checkout develop
 
       - name: Set up Python ${{ env.PYTHON_VERSION }}
         id: setup-python
