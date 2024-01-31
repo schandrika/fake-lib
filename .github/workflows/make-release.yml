@@ -174,7 +174,8 @@ jobs:
         env:
          GITHUB_TOKEN: ${{ secrets.GA_PAT_TOKEN }}
         run: |
-          echo "GITHUB_TOKEN=${{ secrets.GA_PAT_TOKEN }}" >> "$GITHUB_ENV"
+          #echo "GITHUB_TOKEN=${{ secrets.GA_PAT_TOKEN }}" >> "$GITHUB_ENV"
+          git remote set-url origin https://github.com/schandrika/fake-lib
           git checkout -b releases/${NEW_TAG}
           git push --set-upstream origin releases/${NEW_TAG}
 
